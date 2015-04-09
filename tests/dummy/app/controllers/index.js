@@ -1,29 +1,22 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-
-  items: [
-    {id: 1, title: 'Title1', date: '12.21.2009'},
-    {id: 2, title: 'Title2', date: '13.21.2009'},
-    {id: 3, title: 'Title3', date: '14.21.2009'},
-    {id: 4, title: 'Title4', date: '15.21.2009'},
-    {id: 5, title: 'Title5', date: '16.21.2009'}
-  ],
+  columns: ['id', 'title', 'body'],
 
   actions: {
     exportToExcel: function(){
+      var self = this;
       var workbook = ExcelBuilder.createWorkbook();
       var sheet = workbook.createWorksheet({name: 'Test'});
-      var originalData = [
-          ['Artist', 'Album', 'Price'],
-          ['Buckethead', 'Albino Slug', 8.99],
-          ['Buckethead', 'Electric Tears', 13.99],
-          ['Buckethead', 'Colma', 11.34],
-          ['Crystal Method', 'Vegas', 10.54],
-          ['Crystal Method', 'Tweekend', 10.64],
-          ['Crystal Method', 'Divided By Night', 8.99]
-      ];
-      sheet.setData(originalData);
+
+      var prepareData = [];
+      prepareData.pushObject(this.get('columns'));
+      this.get('model').forEach(function(item){
+        prepareData.pushObject(self.get('columns').map(function(column){
+          return item.get(column);
+        }));
+      });
+      sheet.setData(prepareData);
       workbook.addWorksheet(sheet);
       var data = ExcelBuilder.createFile(workbook);
 

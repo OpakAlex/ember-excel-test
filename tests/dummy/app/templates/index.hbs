@@ -3,15 +3,15 @@
         <tr>
             <th>Id</th>
             <th>Title</th>
-            <th>Date</th>
+            <th>Body</th>
         </tr>
     </thead>
     <tbody>
-        {{#each item in items}}
+        {{#each item in model}}
             <tr>
                 <td>{{item.id}}</td>
                 <td>{{item.title}}</td>
-                <td>{{item.date}}</td>
+                <td>{{item.body}}</td>
             </tr>
         {{/each}}
     </tbody>
