@@ -9,13 +9,22 @@ export default Ember.Controller.extend({
       var workbook = ExcelBuilder.createWorkbook();
       var sheet = workbook.createWorksheet({name: 'Test'});
 
-      var prepareData = [];
-      prepareData.pushObject(this.get('columns'));
-      this.get('model').forEach(function(item){
-        prepareData.pushObject(self.get('columns').map(function(column){
-          return item.get(column);
-        }));
-      });
+      var prepareData = [['POPULATION']];
+      prepareData.pushObject(['      ','Medicaid Expansion Adjustment', '0', '0', '0']);
+      prepareData.pushObject(['      ', '% Var from Est. Exchange Pop', '0', '0', '0']);
+      // prepareData.pushObject(this.get('columns'));
+      // this.get('model').forEach(function(item){
+      //   prepareData.pushObject(self.get('columns').map(function(column){
+      //     return item.get(column);
+      //   }));
+      // });
+
+      prepareData.pushObject(['PAYER RISK ARRANGEMENTS'])
+      prepareData.pushObject(['     ','% Commercial Revenue in Risk Contracts', 15, 15,15])
+      prepareData.pushObject(['     ','% Medicare Revenue in Risk Contracts', 15, 15,15])
+      prepareData.pushObject(['     ','% Medicaid Revenue in Risk Contracts', 15, 15,15])
+      prepareData.pushObject(['     ','% of HXR Revenue in Risk Contracts', 15, 15,15])
+      prepareData.pushObject(['     ','% Savings to Trinity', 15, 15,15])
       sheet.setData(prepareData);
       workbook.addWorksheet(sheet);
       var data = ExcelBuilder.createFile(workbook);
@@ -35,7 +44,7 @@ export default Ember.Controller.extend({
 				width: 100,
 				height: 30,
         dataType: 'base64',
-				append:true
+				append: false
 			});
     }
 
